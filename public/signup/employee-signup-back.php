@@ -61,7 +61,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->num_rows > 0) {
             $errors["username_error"] = "Username is already taken";
         }
-        $stmt->close();
+
+        $stmt = $conn->prepare("SELECT id FROM customers WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $errors["username_error"] = "Username is already taken";
+        }
     }
 
     if (empty($errors)) {
@@ -85,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["success_message"] = "Registration successful";
             unset($_SESSION["form_data"]);
             unset($_SESSION["errors"]);
-            header("Location: login.php");
+            header("Location: ../login/login-front.php");
             exit();
         } else {
             $errors["error_execution"] = "Error: " . $stmt->error;
