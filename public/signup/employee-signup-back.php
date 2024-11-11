@@ -7,13 +7,24 @@ $form_data = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST["username"]);
+    $first_name = trim($_POST["first_name"]);
+    $last_name = trim($_POST["last_name"]);
     $email = trim($_POST["email"]);
     $password = trim($_POST["password"]);
     $confirm_password = trim($_POST["confirm_password"]);
+    $job_role = trim($_POST["job_role"]);
+    $employee_id = trim($_POST["employee_id"]);
+    $contact_number = trim($_POST["contact_number"]);
     $form_data = $_POST;
 
     if (empty($username)) {
         $errors["username_error"] = "Username is required";
+    }
+    if (empty($first_name)) {
+        $errors["first_name_error"] = "First name is required";
+    }
+    if (empty($last_name)) {
+        $errors["last_name_error"] = "Last name is required";
     }
     if (empty($email)) {
         $errors["email_error"] = "Email is required";
@@ -31,9 +42,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($password !== $confirm_password) {
         $errors["confirm_password_error"] = "Passwords do not match";
     }
+    if (empty($employee_id)) {
+        $errors["employee_id_error"] = "Employee ID is required";
+    }
+    if (empty($contact_number)) {
+        $errors["contact_number_error"] = "Contact number is required";
+    } elseif (!preg_match('/^\d{10}$/', $contact_number)) {
+        $errors["contact_number_error"] = "Please enter a valid contact number";
+    }
+
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("SELECT id FROM customers WHERE username = ?");
+        $stmt = $conn->prepare("SELECT id FROM employees WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $stmt->store_result();
@@ -45,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("SELECT id FROM customers WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id FROM employees WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
@@ -58,8 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($errors)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("INSERT INTO customers (username, email, password, created_at) VALUES (?, ?, ?, NOW())");
-        $stmt->bind_param("sss", $username, $email, $hashed_password);
+        $stmt = $conn->prepare("INSERT INTO employees (username, email, password, first_name, last_name, job_role, employee_id, contact_number, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+        $stmt->bind_param("ssssssss", $username, $email, $hashed_password, $first_name, $last_name, $job_role, $employee_id, $contact_number);
 
         if ($stmt->execute()) {
             $_SESSION["success_message"] = "Registration successful";
@@ -76,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
         $_SESSION['form_data'] = $form_data;
-        header("Location: customer-signup-front.php");
+        header("Location: employee-signup-front.php");
         exit();
     }
 }
