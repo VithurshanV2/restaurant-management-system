@@ -16,7 +16,7 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
 </head>
 
 <body>
-    <form action="process-reservation.php" method="post">
+    <form action="process-reservation-back.php" method="post">
         <div>
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" value="<?php echo isset($form_data['date']) ? htmlspecialchars($form_data['date']) : ''; ?>" required>
