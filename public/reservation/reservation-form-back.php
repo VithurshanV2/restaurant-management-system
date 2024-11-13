@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "../../config/db_connection.php";
+require "../../config/db-connection.php";
 
 $errors = [];
 $form_data = [];
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $_SESSION["errors"] = $errors;
     $_SESSION["form_data"] = $form_data;
-    header("Location: reservation-form.php");
+    header("Location: reservation-form-front.php");
     exit();
 }
 

@@ -45,7 +45,7 @@ $tables = $stmt->get_result();
     </div>
     <div id="add_table" style="display: none;">
         <h2>Add Tables</h2>
-        <form action="manage-tables.php" method="post">
+        <form action="manage-tables-back.php" method="post">
             <div>
                 <label for="table_name">Table Name:</label>
                 <input type="text" id="table_name" name="table_name" required>
@@ -64,7 +64,7 @@ $tables = $stmt->get_result();
     </div>
     <div id="edit_table" style="display: none;">
         <h2>Edit Tables</h2>
-        <form action="manage-table.php" method="post">
+        <form action="manage-tables-back.php" method="post">
             <input type="hidden" id="edit_table_id" name="edit_table_id">
             <div>
                 <label for="table_name">Table Name:</label>
