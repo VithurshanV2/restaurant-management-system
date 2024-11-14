@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("SELECT table_id, seat_count FROM tables WHERE available = 1 AND seat_count >= ?");
+        $stmt = $conn->prepare("SELECT table_id, seat_count FROM tables WHERE available = 1 AND seat_count >= ? ORDER BY seat_count ASC");
         $stmt->bind_param("i", $party_size);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -38,13 +38,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             while ($row = $result->fetch_assoc()) {
                 $table_id = $row["table_id"];
 
-                $stmt = $conn->prepare("INSERT INTO reservation_tables (reservation_id, table_id) VALUES (?,?)");
+                $stmt = $conn->prepare("INSERT INTO reservations_tables (reservation_id, table_id) VALUES (?,?)");
                 $stmt->bind_param("ii", $reservation_id, $table_id);
                 $stmt->execute();
 
                 $stmt = $conn->prepare("UPDATE tables SET available = 0 WHERE table_id = ?");
                 $stmt->bind_param("i", $table_id);
                 $stmt->execute();
+                break;
             }
             $_SESSION["success_message"] = "Reservation created successfully";
             unset($_SESSION["form_data"], $_SESSION["errors"]);

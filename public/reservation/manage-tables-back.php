@@ -25,8 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         if (empty($errors)) {
-            $stmt = $conn->prepare("INSERT INTO tables (table_name, seat_count, available) VALUES (?, ?, ?)");
-            $stmt->bind_param("sii", $table_name, $seat_count, $available);
+            $stmt = $conn->prepare("SELECT MAX(position) AS max_position FROM tables");
+            $stmt->execute();
+            $current_position = $stmt->get_result()->fetch_assoc();
+            $new_position = $current_position['max_position'] + 1;
+
+            $stmt = $conn->prepare("INSERT INTO tables (table_name, seat_count, available, position) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("siii", $table_name, $seat_count, $available, $new_position);
             $stmt->execute();
             $_SESSION["success_message"] = "Table added successfully";
         } else {
@@ -98,6 +103,51 @@ if (isset($_POST["remove_table"])) {
         $_SESSION["errors"] = $errors;
         $_SESSION["form_data"] = $form_data;
     }
+    header("Location: manage-tables-front.php");
+    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["move_up"])) {
+        $table_id = $_POST["table_id"];
+
+        $stmt = $conn->prepare("SELECT position FROM tables WHERE table_id = ?");
+        $stmt->bind_param("i", $table_id);
+        $stmt->execute();
+        $current = $stmt->get_result()->fetch_assoc();
+
+        $stmt = $conn->prepare("SELECT table_id, position FROM tables WHERE position < ? ORDER BY position DESC LIMIT 1");
+        $stmt->bind_param("i", $current["position"]);
+        $stmt->execute();
+        $above = $stmt->get_result()->fetch_assoc();
+
+        if ($above) {
+            $conn->query("UPDATE tables SET position = {$above['position']} WHERE table_id = {$table_id}");
+            $conn->query("UPDATE tables SET position = {$current['position']} WHERE table_id = {$above['table_id']}");
+            $_SESSION["success_message"] = "Table moved up successfully";
+        }
+    }
+
+    if (isset($_POST["move_down"])) {
+        $table_id = $_POST["table_id"];
+
+        $stmt = $conn->prepare("SELECT position FROM tables WHERE table_id = ?");
+        $stmt->bind_param("i", $table_id);
+        $stmt->execute();
+        $current = $stmt->get_result()->fetch_assoc();
+
+        $stmt = $conn->prepare("SELECT table_id, position FROM tables WHERE position > ? ORDER BY position ASC LIMIT 1");
+        $stmt->bind_param("i", $current["position"]);
+        $stmt->execute();
+        $below = $stmt->get_result()->fetch_assoc();
+
+        if ($below) {
+            $conn->query("UPDATE tables SET position = {$below['position']} WHERE table_id = {$table_id}");
+            $conn->query("UPDATE tables SET position = {$current['position']} WHERE table_id = {$below['table_id']}");
+            $_SESSION["success_message"] = "Table moved down successfully";
+        }
+    }
+
     header("Location: manage-tables-front.php");
     exit();
 }
