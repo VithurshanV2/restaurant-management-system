@@ -13,7 +13,8 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservation page</title>
-</head>
+    
+   </head>
 
 <body>
     <form action="reservation-form-back.php" method="post">
