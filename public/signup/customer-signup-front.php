@@ -13,74 +13,7 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up Page</title>
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-form {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-}
-
-h2 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-}
-
-input[type="text"], input[type="email"], input[type="password"], input[type="tel"], select {
-    width: calc(100% - 24px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background: #4CAF50;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-size: 16px;
-}
-
-button:hover {
-    background: #45a049;
-}
-
-.error-message {
-    color: red;
-    font-size: 12px;
-    margin-top: -10px;
-    margin-bottom: 10px;
-}
-
-a {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    color: #4CAF50;
-}
-
-a:hover {
-    text-decoration: none;
-    color: #45a049;
-}
-    </style>
+   
 </head>
 
 <body>
