@@ -16,7 +16,7 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
 </head>
 
 <body>
-    <form action="process-reservation-back.php" method="post">
+    <form action="reservation-form-back.php" method="post">
         <div>
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" value="<?php echo isset($form_data['date']) ? htmlspecialchars($form_data['date']) : ''; ?>" required>
@@ -47,6 +47,9 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
 
         <button type="submit">Check Availability</button>
     </form>
+    <?php if (isset($errors["availability_error"])): ?>
+        <p class="error-message"><?php echo $errors["availability_error"]; ?></p>
+    <?php endif; ?>
     <?php if (isset($_SESSION['success_message'])): ?>
         <p>
             <?php

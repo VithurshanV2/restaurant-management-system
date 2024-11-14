@@ -2,7 +2,7 @@
 session_start();
 require "../../config/db-connection.php";
 
-$stmt = $conn->prepare("SELECT * FROM tables ORDER BY table_id");
+$stmt = $conn->prepare("SELECT * FROM tables ORDER BY position ASC");
 $stmt->execute();
 $tables = $stmt->get_result();
 
@@ -26,7 +26,6 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
     <div>
         <table>
             <tr>
-                <th>Table ID</th>
                 <th>Table Name</th>
                 <th>Seat Count</th>
                 <th>Available</th>
@@ -34,11 +33,16 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
             </tr>
             <?php while ($row = $tables->fetch_assoc()): ?>
                 <tr>
-                    <td><?php echo $row["table_id"]; ?></td>
                     <td><?php echo htmlspecialchars($row["table_name"]); ?></td>
                     <td><?php echo $row["seat_count"]; ?></td>
                     <td><?php echo $row["available"] ? "Yes" : "No"; ?></td>
                     <td>
+                        <form action="manage-tables-back.php" method="post" style="display:inline;">
+                            <input type="hidden" name="table_id" value="<?php echo $row['table_id']; ?>">
+                            <button type="submit" name="move_up" <?php echo ($row["position"] == 1) ? "disabled" : ""; ?>>Move Up</button>
+                            <button type="submit" name="move_down">Move Down</button>
+                        </form>
+
                         <button onclick="editTable(<?php echo $row['table_id']; ?>, '<?php echo htmlspecialchars($row['table_name']); ?>', <?php echo $row['seat_count']; ?>, <?php echo $row['available']; ?>)">Edit</button>
                         <form action="manage-tables-back.php" method="post" style="display:inline;">
                             <input type="hidden" name="remove_table_id" value="<?php echo $row['table_id']; ?>">
