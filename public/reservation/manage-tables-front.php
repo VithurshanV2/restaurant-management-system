@@ -19,7 +19,77 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Tables</title>
-    
+    <style>
+        body { 
+      font-family: Arial, sans-serif; 
+      background-color: #f9f9f9; 
+      margin: 0;
+      padding: 20px; 
+      } 
+    h2 { 
+     text-align: center; 
+     color: #333; 
+    }
+    table { 
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px; 
+    }
+        th, td { 
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left; 
+        }
+        th { 
+            background-color: #4CAF50; 
+            color: white;
+        } 
+        tr:nth-child(even) { 
+            background-color: #f2f2f2; 
+        } 
+        button {
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer; 
+        } 
+        button:hover { 
+            background-color: #45a049; 
+        } 
+        .error-message { 
+            color: red; 
+            font-size: 14px; 
+        }
+        form {
+            margin: 10px 0; 
+        } 
+        div { 
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px; 
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px; 
+            box-sizing: border-box; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+        #add_table, #edit_table {
+            border: 1px solid #ccc; 
+            padding: 20px; 
+            background-color: #fff; 
+            border-radius: 8px;
+            margin: 20px 0;
+        } 
+        #add_table h2, #edit_table h2 {
+            margin-top: 0; 
+        }      
+    </style>
 </head>
 
 <body>
