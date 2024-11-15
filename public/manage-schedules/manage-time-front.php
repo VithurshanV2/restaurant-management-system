@@ -10,6 +10,21 @@ $stmt = $conn->prepare("SELECT id, closed_date, reason FROM closed_dates ORDER B
 $stmt->execute();
 $closed_dates = $stmt->get_result();
 
+$selected_day = $_SESSION['selected_day'] ?? '';
+if (isset($_GET['day'])) {
+    $_SESSION['selected_day'] = $_GET['day'];
+    $selected_day = $_SESSION['selected_day'];
+}
+
+$stmt = $conn->prepare("SELECT id, day, start_time, end_time FROM time_slots WHERE day = ? ORDER BY start_time");
+$stmt->bind_param('s', $selected_day);
+$stmt->execute();
+$time_slots = $stmt->get_result();
+
+$stmt = $conn->prepare("SELECT DISTINCT day FROM time_slots ORDER BY FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')");
+$stmt->execute();
+$days = $stmt->get_result();
+
 $success_message = $_SESSION["success_message"] ?? null;
 $errors = $_SESSION["errors"] ?? [];
 $form_data = $_SESSION["form_data"] ?? [];
@@ -25,7 +40,7 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
     <title>Manage Restaurant Hours</title>
 </head>
 
-<body>
+<div>
     <div>
         <h2>Closed Dates</h2>
         <table>
@@ -67,9 +82,75 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
             <button type="button" onclick="cancelChanges()">Cancel</button>
         </form>
     </div>
-
-    <h2>Manage Restaurant Hours</h2>
     <div>
+        <h2>Manage Time Slots</h2>
+        <form action="" method="get">
+            <label for="day">Select Day:</label>
+            <select name="day" id="day" onchange="this.form.submit()">
+                <option value="">Select a day</option>
+                <?php while ($row = $days->fetch_assoc()): ?>
+                    <option value="<?php echo htmlspecialchars($row["day"]); ?>" <?php echo $selected_day == $row["day"] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($row["day"]); ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
+        </form>
+
+        <?php if ($selected_day): ?>
+            <table>
+                <tr>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Actions</th>
+                </tr>
+                <?php while ($row = $time_slots->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row["start_time"]); ?></td>
+                        <td><?php echo htmlspecialchars($row["end_time"]); ?></td>
+                        <td>
+                            <form action="manage-time-back.php" method="post" style="display: inline;">
+                                <input type="hidden" name="slot_id" value="<?php echo $row['id']; ?>">
+                                <button type="submit" name="remove_time_slot" onclick="return confirm('Are you sure you want to remove this time slot?')">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </table>
+        <?php endif; ?>
+        <div>
+            <button onclick="showAddTimeSlot()">Add Time Slot</button>
+        </div>
+        <div id="add_time_slot" style="display: none;">
+            <h3>Add Time Slot</h3>
+            <form action="manage-time-back.php" method="post">
+                <div>
+                    <label for="day">Day:</label>
+                    <select name="day" id="day" required>
+                        <option value="">Select a day</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="start_time">Start Time:</label>
+                    <input type="time" id="start_time" name="start_time" required>
+                </div>
+                <div>
+                    <label for="end_time">End Time:</label>
+                    <input type="time" id="end_time" name="end_time" required>
+                </div>
+                <button type="submit" name="add_time_slot">Add Time Slot</button>
+                <button type="button" onclick="cancelTimeSlot()">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <div>
+        <h2>Manage Restaurant Hours</h2>
         <table>
             <tr>
                 <th>Day</th>
@@ -149,11 +230,22 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
             document.getElementById("add_closed_date").style.display = "block";
         }
 
-
         function cancelChanges() {
+            document.getElementById("add_closed_date").style.display = "none";
+        }
+
+        function showAddTimeSlot() {
+            document.getElementById("add_time_slot").style.display = "block";
+        }
+
+        function cancelTimeSlot() {
+            document.getElementById("add_time_slot").style.display = "none";
+        }
+
+        function cancelSchedule() {
             document.getElementById("update_schedule").style.display = "none";
         }
     </script>
-</body>
+    </body>
 
 </html>
