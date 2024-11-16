@@ -27,9 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_result($user, $hashed_password);
             $stmt->fetch();
             if (password_verify($password, $hashed_password)) {
-                $_SESSION["user"] = $user;
+                $_SESSION["customer_id"] = $user;
                 $_SESSION["user_type"] = "customer";
-                header("Location: /customer");
+                header("Location: ../home/home.html");
                 exit();
             } else {
                 $errors["password_error"] = "Incorrect password";
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_result($user, $hashed_password);
                 $stmt->fetch();
                 if (password_verify($password, $hashed_password)) {
-                    $_SESSION["user"] = $user;
+                    $_SESSION["employee_id"] = $user;
                     $_SESSION["user_type"] = "employee";
                     header("Location: /dashboard/employee-dashboard.php");
                     exit();

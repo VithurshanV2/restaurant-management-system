@@ -6,60 +6,69 @@ $errors = [];
 $form_data = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $reservation_date = trim($_POST["date"]);
-    $reservation_time = trim($_POST["time"]);
-    $party_size = trim($_POST["party_size"]);
+    $reservation_date = trim($_POST['reservation_date']);
+    $reservation_time = trim($_POST['reservation_time']);
+    $party_size = trim($_POST['party_size']);
+    $customer_name = trim($_POST['customer_name']);
+    $notes = trim($_POST['notes']);
+    $day_of_week = date('l', strtotime($reservation_date));
+    $email = trim($_POST['email']);
+
     $form_data = $_POST;
 
-    if (empty($reservation_date)) {
-        $errors["date_error"] = "Please select a date";
+    if (!isset($_SESSION['customer_id'])) {
+        header("Location: ../login/login-front.php");
+        exit;
     }
-    if (empty($reservation_time)) {
-        $errors["time_error"] = "Please select a time";
+
+    $customer_id = $_SESSION['customer_id'];
+
+    $stmt = $conn->prepare("SELECT * FROM closed_dates WHERE closed_date = ?");
+    $stmt->bind_param("s", $reservation_date);
+    $stmt->execute();
+    $closed_result = $stmt->get_result();
+
+    if ($closed_result->num_rows > 0) {
+        $errors['date_error'] = "The restaurant is closed on this day";
     }
+
+    $stmt = $conn->prepare("SELECT opening_time, closing_time FROM restaurant_hours WHERE days_in_week = ? AND is_closed = 0");
+    $stmt->bind_param("s", $day_of_week);
+    $stmt->execute();
+    $hours_result = $stmt->get_result();
+
+    if ($hours_result->num_rows > 0) {
+        $hours = $hours_result->fetch_assoc();
+        $opening_time = $hours['opening_time'];
+        $closing_time = $hours['closing_time'];
+
+        if ($reservation_time < $opening_time || $reservation_time >= $closing_time) {
+            $errors['time_error'] = "The restaurant is not open at this time";
+        }
+    } else {
+        $errors['date_error'] = "The restaurant is closed on this day";
+    }
+
     if (empty($party_size) || !is_numeric($party_size)) {
-        $errors["party_size_error"] = "Please enter a valid party size";
+        $errors['party_size_error'] = "Please enter a valid party size";
     }
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("SELECT table_id, seat_count FROM tables WHERE available = 1 AND seat_count >= ? ORDER BY seat_count ASC");
-        $stmt->bind_param("i", $party_size);
+        $status = "pending";
+        $stmt = $conn->prepare("INSERT INTO reservations (customer_id, customer_name, reservation_date, reservation_time, party_size, status, notes) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("issdsss", $customer_id, $customer_name, $reservation_date, $reservation_time, $party_size, $status, $notes);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $reservation_id = $stmt->insert_id;
 
-        if ($result->num_rows > 0) {
-            $customer_id = 1;
-
-            $stmt = $conn->prepare("INSERT INTO reservations (customer_id, reservation_date, reservation_time, party_size, status) VALUES (?,?,?,?, 'pending')");
-            $stmt->bind_param("isss", $customer_id, $reservation_date, $reservation_time, $party_size);
-            $stmt->execute();
-            $reservation_id = $stmt->insert_id;
-
-            while ($row = $result->fetch_assoc()) {
-                $table_id = $row["table_id"];
-
-                $stmt = $conn->prepare("INSERT INTO reservations_tables (reservation_id, table_id) VALUES (?,?)");
-                $stmt->bind_param("ii", $reservation_id, $table_id);
-                $stmt->execute();
-
-                $stmt = $conn->prepare("UPDATE tables SET available = 0 WHERE table_id = ?");
-                $stmt->bind_param("i", $table_id);
-                $stmt->execute();
-                break;
-            }
-            $_SESSION["success_message"] = "Reservation created successfully";
-            unset($_SESSION["form_data"], $_SESSION["errors"]);
-            $_SESSION['reservation_id'] = $reservation_id;
-            header("Location: checkout.php");
-            exit();
-        } else {
-            $errors["availability_error"] = "No tables are currently available for the selected time and party size";
-        }
+        $_SESSION["success_message"] = "Reservation requested. Please wait for confirmation";
+        header("Location: reservation-confirmation-front.php");
+        exit;
+    } else {
+        $_SESSION["errors"] = $errors;
+        $_SESSION["form_data"] = $form_data;
+        header("Location: reservation-form-front.php");
+        exit;
     }
-    $_SESSION["errors"] = $errors;
-    $_SESSION["form_data"] = $form_data;
-    header("Location: reservation-form-front.php");
-    exit();
 }
 
 $conn->close();

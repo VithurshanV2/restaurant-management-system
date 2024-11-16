@@ -1,9 +1,11 @@
 <?php
 session_start();
+require "../../config/db-connection.php";
 
-$errors = isset($_SESSION["errors"]) ? $_SESSION["errors"] : [];
-$form_data = isset($_SESSION["form_data"]) ? $_SESSION["form_data"] : [];
-unset($_SESSION["errors"], $_SESSION["form_data"]);
+$success_message = $_SESSION["success_message"] ?? null;
+$errors = $_SESSION["errors"] ?? [];
+$form_data = $_SESSION["form_data"] ?? [];
+unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"]);
 ?>
 
 <!DOCTYPE html>
@@ -12,52 +14,52 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservation page</title>
-    
-   </head>
+    <title>Reservation Form</title>
+</head>
 
 <body>
-    <form action="reservation-form-back.php" method="post">
+    <h2>Reservation Form</h2>
+    <form action="reservation-form-back.php" method="POST">
         <div>
-            <label for="date">Date:</label>
-            <input type="date" id="date" name="date" value="<?php echo isset($form_data['date']) ? htmlspecialchars($form_data['date']) : ''; ?>" required>
-            <?php if (isset($errors["date_error"])): ?>
-                <span class="error-message">
-                    <?php echo $errors["date_error"]; ?>
-                </span>
-            <?php endif; ?>
-        </div>
-        <div>
-            <label for="time">Time:</label>
-            <input type="time" id="time" name="time" value="<?php echo isset($form_data['time']) ? htmlspecialchars($form_data['time']) : ''; ?>" required>
-            <?php if (isset($errors["time_error"])): ?>
-                <span class="error-message">
-                    <?php echo $errors["time_error"]; ?>
-                </span>
-            <?php endif; ?>
-        </div>
-        <div>
-            <label for="party_size">Party size:</label>
-            <input type="number" id="party_size" name="party_size" placeholder="number of parties" value="<?php echo isset($form_data['party_size']) ? htmlspecialchars($form_data['party_size']) : ''; ?>" required>
-            <?php if (isset($errors["party_size_error"])): ?>
-                <span class="error-message">
-                    <?php echo $errors["party_size_error"]; ?>
-                </span>
+            <label for="date">Reservation Date:</label>
+            <input type="date" id="date" name="reservation_date" value="<?php echo isset($form_data['reservation_date']) ? htmlspecialchars($form_data['reservation_date']) : ''; ?>" required>
+            <?php if (isset($errors['date_error'])): ?>
+                <span class="error-message"><?php echo $errors['date_error']; ?></span>
             <?php endif; ?>
         </div>
 
-        <button type="submit">Check Availability</button>
+        <div>
+            <label for="time">Reservation Time:</label>
+            <input type="time" id="time" name="reservation_time" value="<?php echo isset($form_data['reservation_time']) ? htmlspecialchars($form_data['reservation_time']) : ''; ?>" required>
+            <?php if (isset($errors['time_error'])): ?>
+                <span class="error-message"><?php echo $errors['time_error']; ?></span>
+            <?php endif; ?>
+        </div>
+
+        <div>
+            <label for="party_size">Party Size:</label>
+            <input type="number" id="party_size" name="party_size" min="1" value="<?php echo isset($form_data['party_size']) ? htmlspecialchars($form_data['party_size']) : ''; ?>" required>
+            <?php if (isset($errors['party_size_error'])): ?>
+                <span class="error-message"><?php echo $errors['party_size_error']; ?></span>
+            <?php endif; ?>
+        </div>
+
+        <div>
+            <label for="customer_name">Your Name:</label>
+            <input type="text" id="customer_name" name="customer_name" value="<?php echo isset($form_data['customer_name']) ? htmlspecialchars($form_data['customer_name']) : ''; ?>" required>
+        </div>
+
+        <div>
+            <label for="notes">Special Requests:</label>
+            <textarea id="notes" name="notes"><?php echo isset($form_data['notes']) ? htmlspecialchars($form_data['notes']) : ''; ?></textarea>
+        </div>
+
+        <button type="submit">Request Reservation</button>
     </form>
-    <?php if (isset($errors["availability_error"])): ?>
-        <p class="error-message"><?php echo $errors["availability_error"]; ?></p>
-    <?php endif; ?>
-    <?php if (isset($_SESSION['success_message'])): ?>
-        <p>
-            <?php
-            echo $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-            ?>
-        </p>
+
+    <?php if ($success_message): ?>
+        <p><?php echo htmlspecialchars($success_message); ?></p>
+        <?php unset($_SESSION["success_message"]); ?>
     <?php endif; ?>
 </body>
 
