@@ -58,7 +58,7 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
     </form>
 
     <?php if ($success_message): ?>
-        <p><?php echo htmlspecialchars($success_message); ?></p>
+        <p class="error-messages"><?php echo htmlspecialchars($success_message); ?></p>
         <?php unset($_SESSION["success_message"]); ?>
     <?php endif; ?>
 </body>
