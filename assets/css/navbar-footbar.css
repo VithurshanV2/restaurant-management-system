@@ -1,0 +1,32 @@
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #7f5539;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #a66c58;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #fffaf3;
+  color: #7f5539;
+  border-top: 1px solid #e0cfc0;
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+footer a {
+  color: #a66c58;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}

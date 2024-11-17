@@ -1,4 +1,4 @@
-<!-- Navigation Section -->
+<link rel="stylesheet" href="/assets/css/navbar-footer.css">
 
 <nav>
     <ul>

@@ -1,4 +1,5 @@
-<!-- Navigation Section -->
+<link rel="stylesheet" href="/assets/css/navbar-footer.css">
+
 <nav>
     <ul>
         <li><a href="/public/manage-reservation/manage-reservation-front.php">Manage Reservations</a></li>
