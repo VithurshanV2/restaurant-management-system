@@ -8,6 +8,6 @@
         <a href="/public/manage-schedules/manage-time-front.php">Manage Schedules</a>
         <a href="/public/manage-tables/manage-tables-front.php">Manage Tables</a>
         <a href="/public/manage-shifts/manage-shifts-front.php">Manage Shifts</a>
-        <a href="/public/login/logout.php">Logout</a>
+        <a href="/public/logout/logout.php">Logout</a>
     </nav>
 </header>

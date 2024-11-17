@@ -14,15 +14,11 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="/assets/css/login.css">
-    
+
 </head>
-    <!-- Include Navigation Bar -->
-    <?php include 'navbar.php'; ?>
+
 <body>
-
-
-    
-  <form action="login-back.php" method="post">
+    <form action="login-back.php" method="post">
         <h2>Login</h2>
         <div>
             <input type="text" id="username_email" name="username_email" placeholder="username/email" value="<?php echo isset($form_data['username_email']) ? htmlspecialchars($form_data['username_email']) : ''; ?>" required>
@@ -60,10 +56,6 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
             }
         }
     </script>
-    
-    <!-- Include Footer --> 
-   <?php include 'footer.php'; ?>
-
 </body>
 
 </html>

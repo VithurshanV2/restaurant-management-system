@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (password_verify($password, $hashed_password)) {
                     $_SESSION["employee_id"] = $user;
                     $_SESSION["user_type"] = "employee";
-                    header("Location: /dashboard/employee-dashboard.php");
+                    header("Location: ../employee-shifts/employee-shifts-front.php");
                     exit();
                 } else {
                     $errors["password_error"] = "Incorrect password";
