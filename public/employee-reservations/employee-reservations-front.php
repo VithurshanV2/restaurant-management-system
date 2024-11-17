@@ -41,6 +41,9 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
 </head>
 
 <body>
+   <!-- Include Navigation Bar --> 
+   <?php include 'navbar.php'; ?>
+    
     <div>
         <h2>Reservations for <?php echo htmlspecialchars($selected_day ?: 'Selected Day'); ?></h2>
         <form action="employee-reservations-back.php" method="post">
@@ -87,6 +90,10 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+
+    <!-- Include Footer -->
+    <?php include 'footer.php'; ?>
+
 </body>
 
 </html>
