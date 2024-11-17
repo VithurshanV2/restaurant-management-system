@@ -26,6 +26,10 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
 </head>
 
 <body>
+    
+    <!-- Include Navigation Bar -->
+    <?php include 'navbar.php'; ?>
+
     <h2>Restaurant Schedules</h2>
     <div>
         <h2>Closed Days</h2>
@@ -79,6 +83,10 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+
+ <!-- Include Footer --> 
+ <?php include 'footer.php'; ?>
+
 </body>
 
 </html>
