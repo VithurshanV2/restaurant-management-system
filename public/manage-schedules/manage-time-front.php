@@ -31,6 +31,9 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
     <title>Manage Restaurant Hours</title>
     <link rel="stylesheet" href="/assets/css/manage-hours.css">
 </head>
+ <body>
+      <!-- Include Navigation Bar -->
+      <?php include 'navbar.php'; ?>
 
 <div>
     <div>
@@ -163,6 +166,10 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
             document.getElementById("update_schedule").style.display = "none";
         }
     </script>
-    </body>
+    
+      <!-- Include Footer --> 
+      <?php include 'footer.php'; ?>
+    
+</body>
 
 </html>
