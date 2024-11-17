@@ -23,6 +23,9 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
 </head>
 
 <body>
+      <!-- Include Navigation Bar --> 
+      <?php include 'navbar.php'; ?>
+  
     <h2>Manage Tables</h2>
     <div>
         <table>
@@ -143,6 +146,11 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
 
         }
     </script>
+    
+    <!-- Include Footer --> 
+    <?php include 'footer.php'; ?>
+
+
 </body>
 
 </html>
