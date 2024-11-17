@@ -38,6 +38,9 @@ $reservations = $stmt->get_result();
 </head>
 
 <body>
+    <!-- Include Navigation Bar -->
+    <?php include 'navbar.php'; ?>
+    
     <div>
         <h2>Your Reservations</h2>
 
@@ -66,6 +69,9 @@ $reservations = $stmt->get_result();
             <p>No reservations found</p>
         <?php endif; ?>
     </div>
+    <!-- Include Footer -->
+    <?php include 'footer.php'; ?>
+
 </body>
 
 </html>
