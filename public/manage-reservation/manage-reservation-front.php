@@ -26,13 +26,13 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Reservations</title>
-   <link rel="stylesheet" href="/assets/css/manage-reservations.css"> 
+    <link rel="stylesheet" href="/assets/css/manage-reservations.css">
 </head>
 
 <body>
-    <!-- Include Navigation Bar -->
-    <?php include 'navbar.php'; ?>
-   
+
+    <?php include "../../includes/navbar_manager.php"; ?>
+
     <h2>Manage Reservations</h2>
 
     <div>
@@ -111,8 +111,7 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
         </div>
     <?php endif; ?>
 
-<!-- Include Footer --> 
-<?php include 'footer.php'; ?>
+    <?php include "../../includes/footer.php"; ?>
 
 </body>
 

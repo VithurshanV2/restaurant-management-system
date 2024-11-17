@@ -17,11 +17,17 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
     <title>Reservation Form</title>
     <link rel="stylesheet" href="/assets/css/reservations.css">
 </head>
+<h1>Reservation</h1>
+<nav>
+    <a href="/public/home/home.html">Home</a>
+    <a href="/public/about/about.html">About Us</a>
+    <a href="/public/menu/menu.html">Menu</a>
+    <a href="/public/feedback/feedback.html">Feedback</a>
+    <a href="/public/status/reservation-status.php">Reservation Status</a>
+    <a href="/public/login/login-front.php">Login</a>
+</nav>
 
 <body>
-    <!-- Include Navigation Bar -->
-    <?php include 'navbar.php'; ?>
-    
     <h2>Reservation Form</h2>
     <form action="reservation-form-back.php" method="POST">
         <div>
@@ -66,8 +72,8 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
         <?php unset($_SESSION["success_message"]); ?>
     <?php endif; ?>
 
-     <!-- Include Footer --> 
-     <?php include 'footer.php'; ?>
+    <!-- Include Footer -->
+    <?php include 'footer.php'; ?>
 
 </body>
 
