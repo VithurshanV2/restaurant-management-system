@@ -12,8 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $customer_name = trim($_POST["customer_name"]);
     $notes = !empty(trim($_POST["notes"])) ? trim($_POST["notes"]) : 'Not specified';
     $day_of_week = date("l", strtotime($reservation_date));
-    $email = trim($_POST["email"]);
-
     $form_data = $_POST;
 
     if (!isset($_SESSION["customer_id"])) {
