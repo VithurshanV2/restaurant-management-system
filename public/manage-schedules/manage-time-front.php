@@ -29,6 +29,7 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Restaurant Hours</title>
+    <link rel="stylesheet" href="/assets/css/manage-hours.css">
 </head>
 
 <div>
