@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errors)) {
         $status = "pending";
         $stmt = $conn->prepare("INSERT INTO reservations (customer_id, customer_name, reservation_date, reservation_time, party_size, status, notes) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("issdsss", $customer_id, $customer_name, $reservation_date, $reservation_time, $party_size, $status, $notes);
+        $stmt->bind_param("issssss", $customer_id, $customer_name, $reservation_date, $reservation_time, $party_size, $status, $notes);
         $stmt->execute();
         $reservation_id = $stmt->insert_id;
 
