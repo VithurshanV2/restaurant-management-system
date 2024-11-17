@@ -36,11 +36,19 @@ $reservations = $stmt->get_result();
     <title>Your Reservations</title>
     <link rel="stylesheet" href="/assets/css/manage-reservations.css">
 </head>
+<header>
+    <h1>Status</h1>
+    <nav>
+        <a href="/public/home/home.html">Home</a>
+        <a href="/public/about/about.html">About Us</a>
+        <a href="/public/menu/menu.html">Menu</a>
+        <a href="/public/feedback/feedback.html">Feedback</a>
+        <a href="/public/login/login-front.php">Login</a>
+    </nav>
+    <button onclick="location.href='../reservation/reservation-form-front.php'">Reserve a Table</button>
+</header>
 
 <body>
-    <!-- Include Navigation Bar -->
-    <?php include 'navbar.php'; ?>
-    
     <div>
         <h2>Your Reservations</h2>
 
@@ -69,8 +77,8 @@ $reservations = $stmt->get_result();
             <p>No reservations found</p>
         <?php endif; ?>
     </div>
-    <!-- Include Footer -->
-    <?php include 'footer.php'; ?>
+
+    <?php include "../../includes/footer.php"; ?>
 
 </body>
 
