@@ -1,0 +1,10 @@
+/* Menu specific styles */
+#menu h2 {
+    color: #a66c58;
+    font-family: "Dancing Script", cursive;
+}
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
