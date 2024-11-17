@@ -42,6 +42,11 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
 <body>
     <div>
         <h2>Shifts for <?php echo htmlspecialchars($selected_day ?: 'Selected Day'); ?></h2>
+        <form action="employee-shifts-back.php" method="post">
+            <label for="day">Select Day:</label>
+            <input type="date" id="day" name="day" value="<?php echo htmlspecialchars($selected_day); ?>" required>
+            <button type="submit" name="view_shifts">View Shifts</button>
+        </form>
         <?php if ($shifts->num_rows > 0): ?>
             <table>
                 <tr>
@@ -62,18 +67,11 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
         <?php else: ?>
             <p>No shifts found for the selected day</p>
         <?php endif; ?>
-
-        <form action="employee-shifts-back.php" method="post">
-            <label for="day">Select Day:</label>
-            <input type="date" id="day" name="day" value="<?php echo htmlspecialchars($selected_day); ?>" required>
-            <button type="submit" name="view_shifts">View Shifts</button>
-        </form>
     </div>
 
     <?php if ($success_message): ?>
         <div class="success-message">
             <p><?php echo htmlspecialchars($success_message); ?></p>
-            <?php unset($_SESSION["success_message"]); ?>
         </div>
     <?php endif; ?>
 
