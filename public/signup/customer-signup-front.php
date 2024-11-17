@@ -13,6 +13,7 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up Page</title>
+    <link rel="stylesheet" href="/assets/css/customer signup.css">
   
    </head>
 
