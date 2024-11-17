@@ -17,6 +17,9 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
 </head>
 
 <body>
+     <!-- Include Navigation Bar --> 
+      <?php include 'navbar.php'; ?>
+    
     <h2>Sign Up</h2>
     <form action="employee-signup-back.php" method="post">
         <div>
@@ -106,6 +109,10 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
     <p>
         <a href="customer-signup-front.php">Sign up as a customer</a>
     </p>
+  
+    <!-- Include Footer --> 
+    <?php include 'footer.php'; ?>
+
 </body>
 
 </html>
