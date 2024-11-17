@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $reservation_id = $stmt->insert_id;
 
         $_SESSION["success_message"] = "Reservation requested. Please wait for confirmation";
-        header("Location: reservation-confirmation-front.php");
+        header("Location: reservation-form-front.php");
         exit;
     } else {
         $_SESSION["errors"] = $errors;
