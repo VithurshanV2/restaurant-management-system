@@ -10,10 +10,10 @@ $stmt = $conn->prepare("SELECT id, closed_date, reason FROM closed_dates ORDER B
 $stmt->execute();
 $closed_dates = $stmt->get_result();
 
-$selected_day = $_SESSION['selected_day'] ?? '';
-if (isset($_GET['day'])) {
-    $_SESSION['selected_day'] = $_GET['day'];
-    $selected_day = $_SESSION['selected_day'];
+$selected_day = $_SESSION["selected_day"] ?? '';
+if (isset($_GET["day"])) {
+    $_SESSION["selected_day"] = $_GET["day"];
+    $selected_day = $_SESSION["selected_day"];
 }
 
 $success_message = $_SESSION["success_message"] ?? null;
