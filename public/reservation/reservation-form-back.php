@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $reservation_time = trim($_POST["reservation_time"]);
     $party_size = trim($_POST["party_size"]);
     $customer_name = trim($_POST["customer_name"]);
-    $notes = trim($_POST["notes"]);
+    $notes = !empty(trim($_POST["notes"])) ? trim($_POST["notes"]) : 'Not specified';
     $day_of_week = date("l", strtotime($reservation_date));
     $email = trim($_POST["email"]);
 
