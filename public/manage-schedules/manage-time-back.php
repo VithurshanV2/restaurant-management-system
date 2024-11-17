@@ -5,7 +5,7 @@ require "../../config/db-connection.php";
 $errors = [];
 $form_data = [];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_schedule'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_schedule"])) {
     $day = trim($_POST["edit_day"]);
     $opening_time = trim($_POST["opening_time"]);
     $closing_time = trim($_POST["closing_time"]);
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_schedule'])) {
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['toggle_close_day'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["toggle_close_day"])) {
     $day = trim($_POST["day"]);
     $status = intval($_POST["status"]);
 
