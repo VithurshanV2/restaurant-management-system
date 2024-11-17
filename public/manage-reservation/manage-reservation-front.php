@@ -30,6 +30,9 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
 </head>
 
 <body>
+    <!-- Include Navigation Bar -->
+    <?php include 'navbar.php'; ?>
+   
     <h2>Manage Reservations</h2>
 
     <div>
@@ -107,6 +110,10 @@ unset($_SESSION["success_message"], $_SESSION["errors"]);
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+
+<!-- Include Footer --> 
+<?php include 'footer.php'; ?>
+
 </body>
 
 </html>
