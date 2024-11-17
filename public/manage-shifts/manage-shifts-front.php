@@ -32,6 +32,11 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
 </head>
 
 <body>
+   
+    <!-- Include Footer --> 
+    <?php include 'footer.php'; ?>
+
+
     <h2>Manage Employee Shifts</h2>
     <div>
         <form action="manage-shifts-front.php" method="get">
@@ -183,6 +188,11 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
             document.getElementById("update_shift").style.display = "none";
         }
     </script>
+    
+    <!-- Include Footer -->
+    <?php include 'footer.php'; ?>
+
+
 </body>
 
 </html>
