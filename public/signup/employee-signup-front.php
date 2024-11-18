@@ -97,15 +97,14 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
             <?php endif; ?>
         </div>
         <button type="submit">Sign Up</button>
+        <p>
+            <a href="../login/login-front.php">already have an account Sign In</a>
+        </p>
+
+        <p>
+            <a href="customer-signup-front.php">Sign up as a customer</a>
+        </p>
     </form>
-
-    <p>
-        <a href="../login/login-front.php">already have an account Sign In</a>
-    </p>
-
-    <p>
-        <a href="customer-signup-front.php">Sign up as a customer</a>
-    </p>
 </body>
 
 </html>
