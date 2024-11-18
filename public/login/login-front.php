@@ -39,11 +39,10 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
             <strong>Show password</strong>
         </div>
         <button type="submit">Login</button>
+        <p>
+            <a href="../signup/customer-signup-front.php">Don't have an account Sign Up</a>
+        </p>
     </form>
-
-    <p>
-        <a href="../signup/customer-signup-front.php">Don't have an account Sign Up</a>
-    </p>
 
     <script>
         function Toggle() {
