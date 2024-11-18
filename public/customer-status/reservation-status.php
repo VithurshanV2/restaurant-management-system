@@ -45,7 +45,7 @@ $reservations = $stmt->get_result();
         <a href="/public/feedback/feedback.html">Feedback</a>
         <a href="/public/login/login-front.php">Login</a>
     </nav>
-    <button onclick="location.href='../reservation/reservation-form-front.php'">Reserve a Table</button>
+    <button onclick="location.href='../customer-reservation/reservation-form-front.php'">Reserve a Table</button>
 </header>
 
 <body>
