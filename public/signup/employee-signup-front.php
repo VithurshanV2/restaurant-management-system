@@ -1,5 +1,5 @@
 <?php
-require "../../includes/session.php";
+session_start();
 
 $errors = isset($_SESSION["errors"]) ? $_SESSION["errors"] : [];
 $form_data = isset($_SESSION["form_data"]) ? $_SESSION["form_data"] : [];
