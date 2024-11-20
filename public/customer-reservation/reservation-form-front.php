@@ -1,5 +1,7 @@
 <?php
-session_start();
+require "../../includes/session.php";
+check_access(["customer"]);
+
 require "../../config/db-connection.php";
 
 $success_message = $_SESSION["success_message"] ?? null;

@@ -1,5 +1,7 @@
 <?php
-session_start();
+require "../../includes/session.php";
+check_access(["manager"]);
+
 require "../../config/db-connection.php";
 
 $stmt = $conn->prepare("SELECT days_in_week, opening_time, closing_time, is_closed FROM restaurant_hours ORDER BY FIELD(days_in_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')");

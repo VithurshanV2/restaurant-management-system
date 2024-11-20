@@ -1,5 +1,7 @@
 <?php
-session_start();
+require "../../includes/session.php";
+check_access(["employee"]);
+
 require "../../config/db-connection.php";
 
 $selected_day = $_SESSION["selected_day"] ?? '';
