@@ -37,18 +37,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             $stmt->close();
 
-            $stmt = $conn->prepare("SELECT id, password FROM employees WHERE (username = ? OR email = ?)");
+            $stmt = $conn->prepare("SELECT id, password, job_role FROM employees WHERE (username = ? OR email = ?)");
             $stmt->bind_param("ss", $username_email, $username_email);
             $stmt->execute();
             $stmt->store_result();
 
             if ($stmt->num_rows > 0) {
-                $stmt->bind_result($user, $hashed_password);
+                $stmt->bind_result($user, $hashed_password, $job_role);
                 $stmt->fetch();
                 if (password_verify($password, $hashed_password)) {
                     $_SESSION["employee_id"] = $user;
-                    $_SESSION["user_type"] = "employee";
-                    header("Location: ../employee-shifts/employee-shifts-front.php");
+                    $_SESSION["user_type"] = $job_role;
+
+                    if ($job_role === "manager") {
+                        header("Location: ../manage-reservation/manage-reservation-front.php");
+                    } else if ($job_role === "staff") {
+                        header("Location: ../employee-shifts/employee-shifts-front.php");
+                    } else {
+                        header("Location: ../chef/chef-dashboard.php");
+                    }
                     exit();
                 } else {
                     $errors["password_error"] = "Incorrect password";
