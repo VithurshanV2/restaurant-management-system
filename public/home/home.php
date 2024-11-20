@@ -73,7 +73,7 @@
             <a href="/public/logout/logout.php">Logout</a>
 
         </nav>
-        <button onclick="location.href='../customer-reservation/reservation-form-front.php'">Reserve a Table</button>
+        <button onclick="location.href='/public/customer-reservation/reservation-form-front.php'">Reserve a Table</button>
     </header>
 
     <!-- Hero Section -->
