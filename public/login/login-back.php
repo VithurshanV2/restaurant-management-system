@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (password_verify($password, $hashed_password)) {
                 $_SESSION["customer_id"] = $user;
                 $_SESSION["user_type"] = "customer";
-                header("Location: ../home/home.html");
+                header("Location: ../home/home.php");
                 exit();
             } else {
                 $errors["password_error"] = "Incorrect password";
