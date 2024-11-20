@@ -1,5 +1,7 @@
 <?php
-session_start();
+require "../../includes/session.php";
+check_access(["customer"]);
+
 require "../../config/db-connection.php";
 
 if (!isset($_SESSION["customer_id"])) {

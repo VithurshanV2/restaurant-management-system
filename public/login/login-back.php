@@ -1,5 +1,5 @@
 <?php
-session_start();
+require "../../includes/session.php";
 require "../../config/db-connection.php";
 
 $errors = [];
@@ -53,8 +53,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         header("Location: ../manage-reservation/manage-reservation-front.php");
                     } else if ($job_role === "staff") {
                         header("Location: ../employee-shifts/employee-shifts-front.php");
+                    } else if ($job_role === "chef") {
+                        header("Location: ../chef/dashboard.php");
                     } else {
-                        header("Location: ../chef/chef-dashboard.php");
+                        header("Location: ../authorization/unauthorized.php");
                     }
                     exit();
                 } else {

@@ -1,5 +1,7 @@
 <?php
-session_start();
+require "../../includes/session.php";
+check_access(["manager"]);
+
 require "../../config/db-connection.php";
 
 $current_date = date("Y-m-d");
