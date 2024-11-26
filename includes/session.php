@@ -11,7 +11,7 @@ if (!isset($_SESSION["user_type"])) {
 function check_access($allowed_roles)
 {
     if (!in_array($_SESSION["user_type"], $allowed_roles)) {
-        header("Location: /public/unauthorized.php");
+        header("Location: ../../public/authorization/unauthorized.php");
         exit();
     }
 }
