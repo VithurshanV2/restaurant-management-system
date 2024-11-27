@@ -1,9 +1,10 @@
 <?php
 session_start();
 
+$success_message = $_SESSION["success_message"] ?? null;
 $errors = isset($_SESSION["errors"]) ? $_SESSION["errors"] : [];
 $form_data = isset($_SESSION["form_data"]) ? $_SESSION["form_data"] : [];
-unset($_SESSION["errors"], $_SESSION["form_data"]);
+unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"]);
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +47,18 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
             <a href="../signup/customer-signup-front.php">Don't have an account Sign Up</a>
         </p>
     </form>
+
+    <?php if ($success_message): ?>
+        <div class="success-message">
+            <p><?php echo htmlspecialchars($success_message); ?></p>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($errors["email_error"])): ?>
+        <span class="error-message">
+            <?php echo $errors["email_error"]; ?>
+        </span>
+    <?php endif; ?>
 
     <script>
         function Toggle() {
