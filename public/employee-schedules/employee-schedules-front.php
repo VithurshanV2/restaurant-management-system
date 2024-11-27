@@ -1,6 +1,6 @@
 <?php
 require "../../includes/session.php";
-check_access(["employee"]);
+check_access(["staff"]);
 
 require "../../config/db-connection.php";
 
