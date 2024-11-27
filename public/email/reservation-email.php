@@ -4,32 +4,33 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require "../../vendor/autoload.php";
-function sendReservationEmail($customerEmail, $customerName, $reservationDate, $reservationTime, $action)
+
+function sendReservationEmail($customer_email, $customer_name, $reservation_date, $reservation_time, $action)
 {
     $mail = new PHPMailer(true);
 
     try {
         $mail->isSMTP();
-        $mail->Host = "smtp.gmail.com";
+        $mail->Host = "sandbox.smtp.mailtrap.io";
         $mail->SMTPAuth = true;
-        $mail->Username = "example@gmail.com";
-        $mail->Password = "app_password_from_gmail";
+        $mail->Username = "9b74c958918c38";
+        $mail->Password = "883fa6f655df7a";
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->setFrom("example@gmail.com", "Restaurant Name");
-        $mail->addAddress($customerEmail, $customerName);
+        $mail->setFrom("restaurant@email.com", "Restaurant Name");
+        $mail->addAddress($customer_email, $customer_name);
 
         $mail->isHTML(true);
         if ($action == "confirm") {
             $mail->Subject = "Reservation Confirmed";
-            $mail->Body = "<p>Dear $customerName,</p>
-                <p>Your reservation for <strong>$reservationDate</strong> at <strong>$reservationTime</strong> has been confirmed.</p>
+            $mail->Body = "<p>Dear $customer_name,</p>
+                <p>Your reservation for <strong>$reservation_date</strong> at <strong>$reservation_time</strong> has been confirmed.</p>
                 <p>Thank you for the reservation. We will be waiting for your arrival.</p>";
         } elseif ($action == "cancel") {
             $mail->Subject = "Reservation Canceled";
-            $mail->Body = "<p>Dear $customerName,</p>
-                <p>We regret to inform you that your reservation for <strong>$reservationDate</strong> at <strong>$reservationTime</strong> has been canceled.</p>
+            $mail->Body = "<p>Dear $customer_name,</p>
+                <p>We regret to inform you that your reservation for <strong>$reservation_date</strong> at <strong>$reservation_time</strong> has been canceled.</p>
                 <p>We apologize for the cancellation, no vacancies currently available for the requested reservation.</p>";
         }
 
@@ -38,7 +39,7 @@ function sendReservationEmail($customerEmail, $customerName, $reservationDate, $
         $mail->send();
         return true;
     } catch (Exception $e) {
-        error_log("Failed to send email: {$mail->ErrorInfo}");
+        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
         return false;
     }
 }
