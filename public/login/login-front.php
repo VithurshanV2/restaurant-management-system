@@ -38,6 +38,9 @@ unset($_SESSION["errors"], $_SESSION["form_data"]);
             <input type="checkbox" id="show_password" onclick="Toggle()">
             <strong>Show password</strong>
         </div>
+        <div>
+            <a href="../password/forgot-password-front.php">Forgot password?</a>
+        </div>
         <button type="submit">Login</button>
         <p>
             <a href="../signup/customer-signup-front.php">Don't have an account Sign Up</a>
