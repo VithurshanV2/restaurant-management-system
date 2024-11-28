@@ -18,9 +18,25 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservation Form</title>
     <link rel="stylesheet" href="/assets/css/reservations.css">
+    <link rel="stylesheet" href="/assets/css/navbar-footer.css">
 </head>
 
 <body>
+    <header>
+        <h1>Our Restaurant</h1>
+        <nav>
+            <a href="/public/home/home.html">Home</a>
+            <a href="/public/about/about.html">About Us</a>
+            <a href="/public/menu/menu.html">Menu</a>
+            <a href="/public/feedback/feedback.html">Feedback</a>
+            <a href="/public/customer-status/reservation-status.php">Reservation Status</a>
+            <a href="/public/login/login-front.php">Login</a>
+            <a href="/public/logout/logout.php">Logout</a>
+
+        </nav>
+        <button onclick="location.href='/public/customer-reservation/reservation-form-front.php'">Reserve a Table</button>
+    </header>
+
     <h2>Reservation Form</h2>
     <form action="reservation-form-back.php" method="POST">
         <div>
@@ -64,6 +80,10 @@ unset($_SESSION["success_message"], $_SESSION["errors"], $_SESSION["form_data"])
         <p class="error-messages"><?php echo htmlspecialchars($success_message); ?></p>
         <?php unset($_SESSION["success_message"]); ?>
     <?php endif; ?>
+
+    <footer>
+        <p>Follow us on social media!</p>
+    </footer>
 </body>
 
 </html>

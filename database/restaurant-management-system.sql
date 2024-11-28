@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2024 at 07:50 AM
+-- Generation Time: Nov 28, 2024 at 05:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,13 +37,6 @@ CREATE TABLE `closed_dates` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `closed_dates`
---
-
-INSERT INTO `closed_dates` (`id`, `closed_date`, `reason`, `created_at`, `updated_at`) VALUES
-(9, '2024-11-18', 'Not specified', '2024-11-15 09:08:00', '2024-11-15 09:08:00');
-
 -- --------------------------------------------------------
 
 --
@@ -57,13 +50,6 @@ CREATE TABLE `customers` (
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`id`, `username`, `email`, `password`, `created_at`) VALUES
-(1, 'ex', 'example@gmail.com', '$2y$10$xb3X9YcD8QBY1UXqHsQM9eq7RPk6UOeL5H2R9ghLtqzZ1sj61XwBO', '2024-11-10 07:26:55');
 
 -- --------------------------------------------------------
 
@@ -84,12 +70,20 @@ CREATE TABLE `employees` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `employees`
+-- Table structure for table `password_reset`
 --
 
-INSERT INTO `employees` (`id`, `username`, `email`, `password`, `first_name`, `last_name`, `job_role`, `employee_id`, `contact_number`, `created_at`) VALUES
-(4, 'ex1', 'example@gmail.com', '$2y$10$kFgb6TBjAsO2Zp2XLHOLhOwzDcv7B8rHTeOZ5iOoFKmy0JV7qjf3S', 'ex', 'ex', 'manager', 'ex1212', '1212121212', '2024-11-11 14:37:40');
+CREATE TABLE `password_reset` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_type` enum('customer','employee') NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -146,7 +140,7 @@ INSERT INTO `restaurant_hours` (`id`, `days_in_week`, `opening_time`, `closing_t
 (4, 'Thursday', '08:00:00', '22:00:00', 0),
 (5, 'Friday', '08:00:00', '22:00:00', 0),
 (6, 'Saturday', '08:00:00', '22:00:00', 0),
-(7, 'Sunday', '08:00:00', '22:00:00', 1);
+(7, 'Sunday', '08:00:00', '23:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -162,17 +156,6 @@ CREATE TABLE `shifts` (
   `shift_end` time NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `shifts`
---
-
-INSERT INTO `shifts` (`shift_id`, `employee_id`, `shift_date`, `shift_start`, `shift_end`, `created_at`) VALUES
-(8, 'ex1212', '2024-11-18', '08:00:00', '20:00:00', '2024-11-16 16:22:20'),
-(11, 'ex1212', '2024-11-19', '08:00:00', '20:00:00', '2024-11-16 16:28:28'),
-(12, 'ex1212', '2024-11-18', '08:00:00', '20:00:00', '2024-11-16 17:18:13'),
-(13, 'ex1212', '2024-11-20', '08:00:00', '20:00:00', '2024-11-16 17:18:31'),
-(14, 'ex1212', '2024-11-20', '08:00:00', '20:00:00', '2024-11-16 17:18:31');
 
 -- --------------------------------------------------------
 
@@ -197,23 +180,9 @@ CREATE TABLE `tables` (
 INSERT INTO `tables` (`table_id`, `table_name`, `seat_count`, `available`, `created_at`, `updated_at`, `position`) VALUES
 (6, 'T01', 2, 0, '2024-11-14 13:06:38', '2024-11-16 04:38:39', 1),
 (7, 'T02', 4, 0, '2024-11-14 13:09:52', '2024-11-16 04:38:39', 2),
-(8, 'T05', 4, 1, '2024-11-14 13:10:10', '2024-11-16 04:38:18', 5),
-(10, 'T04', 2, 1, '2024-11-14 13:37:19', '2024-11-16 04:38:18', 4),
+(8, 'T05', 4, 1, '2024-11-14 13:10:10', '2024-11-18 11:04:28', 5),
+(10, 'T04', 2, 1, '2024-11-14 13:37:19', '2024-11-18 11:04:25', 4),
 (12, 'T03', 2, 1, '2024-11-14 13:37:49', '2024-11-16 04:37:45', 3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `table_availability`
---
-
-CREATE TABLE `table_availability` (
-  `table_id` int(11) NOT NULL,
-  `reservation_date` date NOT NULL,
-  `time_slot_start` time NOT NULL,
-  `time_slot_end` time NOT NULL,
-  `available` tinyint(1) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -241,6 +210,13 @@ ALTER TABLE `employees`
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `employee_id` (`employee_id`);
+
+--
+-- Indexes for table `password_reset`
+--
+ALTER TABLE `password_reset`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token` (`token`);
 
 --
 -- Indexes for table `reservations`
@@ -277,12 +253,6 @@ ALTER TABLE `tables`
   ADD PRIMARY KEY (`table_id`);
 
 --
--- Indexes for table `table_availability`
---
-ALTER TABLE `table_availability`
-  ADD PRIMARY KEY (`table_id`,`reservation_date`,`time_slot_start`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -290,25 +260,31 @@ ALTER TABLE `table_availability`
 -- AUTO_INCREMENT for table `closed_dates`
 --
 ALTER TABLE `closed_dates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `password_reset`
+--
+ALTER TABLE `password_reset`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `restaurant_hours`
@@ -320,13 +296,13 @@ ALTER TABLE `restaurant_hours`
 -- AUTO_INCREMENT for table `shifts`
 --
 ALTER TABLE `shifts`
-  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `table_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `table_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
@@ -350,12 +326,6 @@ ALTER TABLE `reservations_tables`
 --
 ALTER TABLE `shifts`
   ADD CONSTRAINT `shifts_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`);
-
---
--- Constraints for table `table_availability`
---
-ALTER TABLE `table_availability`
-  ADD CONSTRAINT `table_availability_ibfk_1` FOREIGN KEY (`table_id`) REFERENCES `tables` (`table_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
