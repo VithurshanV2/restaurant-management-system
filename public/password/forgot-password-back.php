@@ -10,7 +10,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($email)) {
         $errors["email_error"] = "Email is required";
-    } else {
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors["email_error"] = "Invalid email address";
+    }
+
+    if (empty($errors)) {
         $user_type = null;
         $user_id = null;
         $username = null;
