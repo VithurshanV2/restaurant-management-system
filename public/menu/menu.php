@@ -1,8 +1,4 @@
-﻿<?php
-require "../../includes/session.php";
-?>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,17 +10,7 @@ require "../../includes/session.php";
 
 <body>
 
-    <header>
-        <h1>Our Menu</h1>
-        <nav>
-            <a href="/public/home/home.html">Home</a>
-            <a href="/public/about/about.html">About Us</a>
-            <a href="/public/feedback/feedback.html">Feedback</a>
-            <a href="/public/customer-status/reservation-status.php">Reservation Status</a>
-            <a href="/public/login/login-front.php">Login</a>
-        </nav>
-        <button onclick="location.href='../reservation/reservation-form-front.php'">Reserve a Table</button>
-    </header>
+    <?php include "../../includes/navbar-customer.php"; ?>
 
     <section id="menu">
         <h2>Starters</h2>
@@ -115,7 +101,7 @@ require "../../includes/session.php";
             <span>$3.99</span>
         </div>
     </section>
-
+    <?php include "../../includes/footer.php"; ?>
 </body>
 
 </html>

@@ -44,19 +44,8 @@
 </head>
 
 <body>
-    <header>
-        <h1>
-            About Us
-        </h1>
-        <nav>
-            <a href="/public/home/home.html">Home</a>
-            <a href="/public/menu/menu.html">Menu</a>
-            <a href="/public/feedback/feedback.html">Feedback</a>
-            <a href="/public/customer-status/reservation-status.php">Reservation Status</a>
-            <a href="/public/login/login-front.php">Login</a>
-        </nav>
-        <button onclick="location.href='../customer-reservation/reservation-form-front.php'">Reserve a Table</button>
-    </header>
+    <?php include "../../includes/navbar-customer.php"; ?>
+
     <section class="about-section">
         <h1>About Us</h1>
         <p class="about-text">
@@ -85,10 +74,7 @@
             </span>
         </div>
     </section>
-    <!-- Footer -->
-    <footer>
-        <p>Follow us on social media!</p>
-    </footer>
+    <?php include "../../includes/footer.php"; ?>
 
 
 </body>

@@ -10,17 +10,7 @@
 
 <body>
 
-    <!-- Header -->
-    <header>
-        <h1>Gallery</h1>
-        <nav>
-            <a href="/public/home/home.html">Home</a>
-            <a href="/public/about/about.html">About Us</a>
-            <a href="/public/menu/menu.html">Menu</a>
-            <a href="/public/feedback/feedback.html">Feedback</a>
-            <a href="/public/login/login-front.php">Login</a>
-        </nav>
-    </header>
+    <?php include "../../includes/navbar-customer.php"; ?>
 
     <!-- Image Grid -->
     <section id="gallery">
@@ -50,7 +40,7 @@
             </div>
         </div>
     </section>
-
+    <?php include "../../includes/footer.php"; ?>
 </body>
 
 </html>
