@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - [Restaurant Name]</title>
-    <base href="http://restaurant-management-system.localhost/">
     <link rel="stylesheet" href="/assets/css/Styles.css">
     <style>
         /* Styling for the About Us section */
