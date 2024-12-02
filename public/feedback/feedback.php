@@ -10,14 +10,7 @@
 
 <body>
 
-    <header>
-        <h1>Customer Feedback</h1>
-        <nav>
-            <a href="/public/home/home.html">Home</a>
-            <a href="/public/about/about.html">About Us</a>
-            <a href="/public/menu/menu.html">Menu</a>
-        </nav>
-    </header>
+    <?php include "../../includes/navbar-customer.php"; ?>
 
     <!-- Testimonial Section -->
     <section id="feedback">
@@ -80,7 +73,7 @@
         </div>
 
     </section>
-
+    <?php include "../../includes/footer.php"; ?>
 </body>
 
 </html>
